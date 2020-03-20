@@ -53,17 +53,6 @@ public class RegexRegisteredService extends AbstractRegisteredService {
     }
 
     @Override
-    public void initialize() {
-        super.initialize();
-        if (this.getClass().equals(RegexRegisteredService.class)) {
-            this.serviceType = "simple";
-        } else {
-            this.serviceType = "saml";
-        }
-
-    }
-
-    @Override
     protected AbstractRegisteredService newInstance() {
         return new RegexRegisteredService();
     }

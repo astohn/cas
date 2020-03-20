@@ -49,8 +49,6 @@ public interface RegisteredService extends Serializable, Comparable<RegisteredSe
      */
     String getServiceId();
 
-    String getServiceType();
-
     /**
      * The numeric identifier for this service. Implementations
      * are expected to initialize the id with the value of {@link #INITIAL_IDENTIFIER_VALUE}.

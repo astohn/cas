@@ -53,9 +53,6 @@ public abstract class AbstractWebApplicationService implements WebApplicationSer
     @Column
     private String artifactId;
 
-    @Column
-    private String serviceType;
-
     @JsonProperty
     @Column
     private String principal;
@@ -81,7 +78,7 @@ public abstract class AbstractWebApplicationService implements WebApplicationSer
      * @param originalUrl the original url
      * @param artifactId  the artifact id
      */
-    protected AbstractWebApplicationService(final String id, final String originalUrl, final String artifactId, final String serviceType) {
+    protected AbstractWebApplicationService(final String id, final String originalUrl, final String artifactId) {
         this.id = id;
         this.originalUrl = originalUrl;
         this.artifactId = artifactId;

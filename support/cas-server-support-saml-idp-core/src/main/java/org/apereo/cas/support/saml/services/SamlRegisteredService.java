@@ -210,12 +210,6 @@ public class SamlRegisteredService extends RegexRegisteredService {
     private ArrayList<String> encryptionWhiteListedAlgorithms = new ArrayList<>(0);
 
     @Override
-    public void initialize() {
-        super.initialize();
-        this.serviceType = "saml";
-    }
-
-    @Override
     protected AbstractRegisteredService newInstance() {
         return new SamlRegisteredService();
     }
