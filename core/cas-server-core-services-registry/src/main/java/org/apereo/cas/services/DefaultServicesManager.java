@@ -1,10 +1,12 @@
 package org.apereo.cas.services;
 
+import org.apereo.cas.authentication.principal.Service;
 import org.springframework.context.ApplicationEventPublisher;
 
 import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.stream.Collectors;
 
 /**
  * Default implementation of the {@link ServicesManager} interface.

@@ -44,7 +44,7 @@ public class GoogleAccountsService extends AbstractWebApplicationService {
      * @param requestId  the request id
      */
     protected GoogleAccountsService(final String id, final String relayState, final String requestId) {
-        super(id, id, null);
+        super(id, id, null, null);
         this.relayState = relayState;
         this.requestId = requestId;
     }
