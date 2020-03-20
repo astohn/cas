@@ -1,11 +1,11 @@
 package org.apereo.cas.services;
 
-import org.apereo.cas.authentication.principal.Service;
-import org.apereo.cas.util.RegexUtils;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import org.apache.commons.lang3.StringUtils;
+import org.apereo.cas.authentication.principal.Service;
+import org.apereo.cas.authentication.principal.SimpleWebApplicationServiceImpl;
+import org.apereo.cas.util.RegexUtils;
 import org.springframework.data.annotation.Transient;
 
 import javax.persistence.DiscriminatorValue;
@@ -41,7 +41,7 @@ public class RegexRegisteredService extends AbstractRegisteredService {
 
     @Override
     public boolean matches(final Service service) {
-        return service != null && matches(service.getId());
+        return (service instanceof SimpleWebApplicationServiceImpl && matches(service.getId()));
     }
 
     @Override
@@ -50,6 +50,17 @@ public class RegexRegisteredService extends AbstractRegisteredService {
             this.servicePattern = RegexUtils.createPattern(this.serviceId);
         }
         return !StringUtils.isBlank(serviceId) && this.servicePattern.matcher(serviceId).matches();
+    }
+
+    @Override
+    public void initialize() {
+        super.initialize();
+        if (this.getClass().equals(RegexRegisteredService.class)) {
+            this.serviceType = "simple";
+        } else {
+            this.serviceType = "saml";
+        }
+
     }
 
     @Override

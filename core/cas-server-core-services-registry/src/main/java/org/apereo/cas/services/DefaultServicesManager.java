@@ -28,6 +28,14 @@ public class DefaultServicesManager extends AbstractServicesManager {
     }
 
     @Override
+    protected Collection<RegisteredService> getCandidateServicesToMatch(Service service) {
+        return this.orderedServices
+                .stream()
+                .filter(r -> r.matches(service))
+                .collect(Collectors.toSet());
+    }
+
+    @Override
     protected void deleteInternal(final RegisteredService service) {
         this.orderedServices.remove(service);
     }

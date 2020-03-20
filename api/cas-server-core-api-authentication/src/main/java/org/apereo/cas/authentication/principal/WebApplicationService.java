@@ -33,6 +33,8 @@ public interface WebApplicationService extends Service {
      */
     String getOriginalUrl();
 
+    String getServiceType();
+
     /**
      * Ticket validation response MUST be produced based on the parameter value.
      * Supported values are XML and JSON. If this parameter is not set,

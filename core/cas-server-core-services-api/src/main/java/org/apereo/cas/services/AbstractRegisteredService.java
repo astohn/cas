@@ -73,6 +73,9 @@ public abstract class AbstractRegisteredService implements RegisteredService {
     private String informationUrl;
 
     @Column
+    protected String serviceType;
+
+    @Column
     private String privacyUrl;
 
     @Column

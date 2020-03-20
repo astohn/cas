@@ -35,7 +35,7 @@ public class OpenIdService extends AbstractWebApplicationService {
     @JsonCreator
     protected OpenIdService(@JsonProperty("id") final String id, @JsonProperty("originalUrl") final String originalUrl,
                             @JsonProperty("artifactId") final String artifactId, @JsonProperty("identity") final String identity) {
-        super(id, originalUrl, artifactId);
+        super(id, originalUrl, artifactId, "openid");
         this.identity = identity;
     }
 

@@ -1,5 +1,6 @@
 package org.apereo.cas.support.saml.services;
 
+import org.apereo.cas.authentication.principal.Service;
 import org.apereo.cas.services.AbstractRegisteredService;
 import org.apereo.cas.services.RegexRegisteredService;
 
@@ -9,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.apereo.cas.support.saml.authentication.principal.SamlService;
 import org.opensaml.saml.saml2.metadata.SPSSODescriptor;
 
 import javax.persistence.CollectionTable;
@@ -179,6 +181,11 @@ public class SamlRegisteredService extends RegexRegisteredService {
     @Column(name = "signing_sig_blacklisted_algs", length = Integer.MAX_VALUE)
     private ArrayList<String> signingSignatureBlackListedAlgorithms = new ArrayList<>(0);
 
+    @Override public boolean matches(Service service) {
+        //return super.matches(service);
+        return (service instanceof SamlService && super.matches(service.getId()));
+    }
+
     @Lob
     @Column(name = "signing_sig_whitelisted_algs", length = Integer.MAX_VALUE)
     private ArrayList<String> signingSignatureWhiteListedAlgorithms = new ArrayList<>(0);
@@ -201,6 +208,12 @@ public class SamlRegisteredService extends RegexRegisteredService {
     @Lob
     @Column(name = "enc_whitelisted_algs", length = Integer.MAX_VALUE)
     private ArrayList<String> encryptionWhiteListedAlgorithms = new ArrayList<>(0);
+
+    @Override
+    public void initialize() {
+        super.initialize();
+        this.serviceType = "saml";
+    }
 
     @Override
     protected AbstractRegisteredService newInstance() {

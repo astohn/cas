@@ -53,7 +53,7 @@ public class GoogleAccountsService extends AbstractWebApplicationService {
     public GoogleAccountsService(@JsonProperty("id") final String id, @JsonProperty("originalUrl") final String originalUrl,
                                  @JsonProperty("artifactId") final String artifactId, @JsonProperty("relayState") final String relayState,
                                  @JsonProperty("requestId") final String requestId) {
-        super(id, originalUrl, artifactId);
+        super(id, originalUrl, artifactId, "google");
         this.relayState = relayState;
         this.requestId = requestId;
     }

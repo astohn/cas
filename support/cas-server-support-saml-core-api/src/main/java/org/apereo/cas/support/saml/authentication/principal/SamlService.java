@@ -46,7 +46,7 @@ public class SamlService extends AbstractWebApplicationService {
     @JsonCreator
     protected SamlService(@JsonProperty("id") final String id, @JsonProperty("originalUrl") final String originalUrl,
                           @JsonProperty("artifactId") final String artifactId, @JsonProperty("requestID") final String requestId) {
-        super(id, originalUrl, artifactId);
+        super(id, originalUrl, artifactId, "saml");
         this.requestId = requestId;
     }
 }

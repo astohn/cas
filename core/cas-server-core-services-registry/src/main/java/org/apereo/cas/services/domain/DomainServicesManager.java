@@ -4,6 +4,7 @@ import org.apereo.cas.services.AbstractServicesManager;
 import org.apereo.cas.services.RegisteredService;
 import org.apereo.cas.services.ServiceRegistry;
 import org.apereo.cas.services.ServicesManager;
+import org.apereo.cas.authentication.principal.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -64,6 +65,11 @@ public class DomainServicesManager extends AbstractServicesManager {
             return new ArrayList<>(0);
         }
         return registeredServices;
+    }
+
+    @Override
+    protected Collection<RegisteredService> getCandidateServicesToMatch(Service service) {
+        return getCandidateServicesToMatch(service.getId());
     }
 
     @Override

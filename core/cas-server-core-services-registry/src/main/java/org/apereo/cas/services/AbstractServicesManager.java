@@ -243,6 +243,8 @@ public abstract class AbstractServicesManager implements ServicesManager {
      */
     protected abstract Collection<RegisteredService> getCandidateServicesToMatch(String serviceId);
 
+    protected abstract Collection<RegisteredService> getCandidateServicesToMatch(Service service);
+
     /**
      * Delete internal.
      *
