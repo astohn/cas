@@ -101,8 +101,26 @@ public abstract class AbstractServicesManager implements ServicesManager {
         }
 
         val service = getCandidateServicesToMatch(serviceId)
+                .stream()
+                .filter(r -> r.matches(serviceId))
+                .findFirst()
+                .orElse(null);
+
+        if (service != null) {
+            service.initialize();
+        }
+        return validateRegisteredService(service);
+    }
+
+    @Override
+    public RegisteredService findServiceBy(final String serviceId, final String serviceType) {
+        if (StringUtils.isBlank(serviceId)) {
+            return null;
+        }
+
+        val service = getCandidateServicesToMatch(serviceId)
             .stream()
-            .filter(r -> r.matches(serviceId))
+            .filter(r -> r.matches(serviceId, serviceType))
             .findFirst()
             .orElse(null);
 
@@ -115,7 +133,7 @@ public abstract class AbstractServicesManager implements ServicesManager {
     @Override
     public RegisteredService findServiceBy(final Service service) {
         return Optional.ofNullable(service)
-            .map(svc -> findServiceBy(svc.getId()))
+            .map(svc -> findServiceBy(svc.getId(), svc.getType()))
             .orElse(null);
     }
 
@@ -242,8 +260,6 @@ public abstract class AbstractServicesManager implements ServicesManager {
      * @return the candidate services to match
      */
     protected abstract Collection<RegisteredService> getCandidateServicesToMatch(String serviceId);
-
-    protected abstract Collection<RegisteredService> getCandidateServicesToMatch(Service service);
 
     /**
      * Delete internal.

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import org.apache.commons.lang3.StringUtils;
 import org.apereo.cas.authentication.principal.Service;
-import org.apereo.cas.authentication.principal.SimpleWebApplicationServiceImpl;
 import org.apereo.cas.util.RegexUtils;
 import org.springframework.data.annotation.Transient;
 
@@ -41,7 +40,15 @@ public class RegexRegisteredService extends AbstractRegisteredService {
 
     @Override
     public boolean matches(final Service service) {
-        return (service instanceof SimpleWebApplicationServiceImpl && matches(service.getId()));
+        return (service.getType().equals("simple") && matches(service.getId()));
+    }
+
+    @Override
+    public boolean matches(final String serviceId, final String serviceType) {
+        if (this.servicePattern == null) {
+            this.servicePattern = RegexUtils.createPattern(this.serviceId);
+        }
+        return !StringUtils.isBlank(serviceId) && serviceType.equals("simple") && this.servicePattern.matcher(serviceId).matches();
     }
 
     @Override

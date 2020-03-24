@@ -23,4 +23,8 @@ public interface Service extends Principal {
      */
     default void setPrincipal(final String principal) {
     }
+
+    default String getType(){
+        return "none";
+    }
 }

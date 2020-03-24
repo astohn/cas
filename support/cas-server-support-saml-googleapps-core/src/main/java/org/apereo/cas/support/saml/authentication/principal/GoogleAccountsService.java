@@ -44,7 +44,7 @@ public class GoogleAccountsService extends AbstractWebApplicationService {
      * @param requestId  the request id
      */
     protected GoogleAccountsService(final String id, final String relayState, final String requestId) {
-        super(id, id, null, null);
+        super(id, id, null);
         this.relayState = relayState;
         this.requestId = requestId;
     }
@@ -53,8 +53,13 @@ public class GoogleAccountsService extends AbstractWebApplicationService {
     public GoogleAccountsService(@JsonProperty("id") final String id, @JsonProperty("originalUrl") final String originalUrl,
                                  @JsonProperty("artifactId") final String artifactId, @JsonProperty("relayState") final String relayState,
                                  @JsonProperty("requestId") final String requestId) {
-        super(id, originalUrl, artifactId, "google");
+        super(id, originalUrl, artifactId);
         this.relayState = relayState;
         this.requestId = requestId;
+    }
+
+    @Override
+    public String getType() {
+        return "simple";
     }
 }

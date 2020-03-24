@@ -23,4 +23,9 @@ public class TokenWebApplicationService extends AbstractWebApplicationService {
     public TokenWebApplicationService(final String id, final String originalUrl, final String artifactId) {
         super(id, originalUrl, artifactId);
     }
+
+    @Override
+    public String getType() {
+        return "token";
+    }
 }

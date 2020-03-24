@@ -74,6 +74,8 @@ public interface ServicesManager {
      */
     RegisteredService findServiceBy(String serviceId);
 
+    RegisteredService findServiceBy(String serviceId, String serviceType);
+
     /**
      * Find a RegisteredService by matching with the supplied service.
      *

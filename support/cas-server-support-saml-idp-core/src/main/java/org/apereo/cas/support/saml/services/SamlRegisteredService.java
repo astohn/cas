@@ -1,16 +1,16 @@
 package org.apereo.cas.support.saml.services;
 
-import org.apereo.cas.authentication.principal.Service;
-import org.apereo.cas.services.AbstractRegisteredService;
-import org.apereo.cas.services.RegexRegisteredService;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.apereo.cas.support.saml.authentication.principal.SamlService;
+import org.apache.commons.lang3.StringUtils;
+import org.apereo.cas.authentication.principal.Service;
+import org.apereo.cas.services.AbstractRegisteredService;
+import org.apereo.cas.services.RegexRegisteredService;
+import org.apereo.cas.util.RegexUtils;
 import org.opensaml.saml.saml2.metadata.SPSSODescriptor;
 
 import javax.persistence.CollectionTable;
@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Pattern;
 
 /**
  * The {@link SamlRegisteredService} is responsible for managing the SAML metadata for a given SP.
@@ -44,6 +45,8 @@ public class SamlRegisteredService extends RegexRegisteredService {
 
     @Column
     private String metadataLocation;
+
+    private transient Pattern servicePattern;
 
     /**
      * Defines a filter that requires the presence of a validUntil
@@ -181,9 +184,17 @@ public class SamlRegisteredService extends RegexRegisteredService {
     @Column(name = "signing_sig_blacklisted_algs", length = Integer.MAX_VALUE)
     private ArrayList<String> signingSignatureBlackListedAlgorithms = new ArrayList<>(0);
 
-    @Override public boolean matches(Service service) {
-        //return super.matches(service);
-        return (service instanceof SamlService && super.matches(service.getId()));
+    @Override
+    public boolean matches(Service service) {
+        return (service.getType().equals("saml") && matches(service.getId()));
+    }
+
+    @Override
+    public boolean matches(final String serviceId, final String serviceType) {
+        if (this.servicePattern == null) {
+            this.servicePattern = RegexUtils.createPattern(this.serviceId);
+        }
+        return !StringUtils.isBlank(serviceId) && serviceType.equals("saml") && this.servicePattern.matcher(serviceId).matches();
     }
 
     @Lob

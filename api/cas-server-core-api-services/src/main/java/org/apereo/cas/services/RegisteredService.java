@@ -196,6 +196,8 @@ public interface RegisteredService extends Serializable, Comparable<RegisteredSe
      */
     boolean matches(Service service);
 
+    boolean matches(String serviceId, String serviceType);
+
     /**
      * Returns whether the service id matches the registered service.
      *

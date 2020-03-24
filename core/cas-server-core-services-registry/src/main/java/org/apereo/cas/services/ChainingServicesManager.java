@@ -101,6 +101,15 @@ public class ChainingServicesManager implements ServicesManager {
     }
 
     @Override
+    public RegisteredService findServiceBy(final String serviceId, final String serviceType) {
+        return serviceManagers.stream()
+                .map(s -> s.findServiceBy(serviceId, serviceType))
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
     public RegisteredService findServiceBy(final Service service) {
         val manager = findServicesManager(service);
         return manager.map(servicesManager -> servicesManager.findServiceBy(service)).orElse(null);
