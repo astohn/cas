@@ -18,9 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.apache.commons.lang3.StringUtils;
 import org.pac4j.cas.client.CasClient;
+import org.pac4j.cas.credentials.authenticator.CasAuthenticator;
 import org.pac4j.core.client.Client;
 import org.pac4j.core.context.JEEContext;
 import org.pac4j.core.context.WebContext;
+import org.pac4j.core.http.callback.QueryParameterCallbackUrlResolver;
 import org.pac4j.core.util.generator.StaticValueGenerator;
 import org.pac4j.oauth.client.OAuth10Client;
 import org.pac4j.oauth.client.OAuth20Client;
@@ -104,6 +106,12 @@ public class DelegatedClientWebflowManager {
             config.setStateGenerator(new StaticValueGenerator(ticketId));
         }
         if (client instanceof CasClient) {
+            final CasClient casClient = (CasClient) client;
+            casClient.getConfiguration().addCustomParam(DelegatedClientWebflowManager.PARAMETER_CLIENT_ID, ticketId);
+            //QueryParameterCallbackUrlResolver callbackUrlResolver = new QueryParameterCallbackUrlResolver(casClient.getConfiguration().getCustomParams());
+            //casClient.setCallbackUrlResolver(callbackUrlResolver);
+            //casClient.setAuthenticator(new CasAuthenticator(casClient.getConfiguration(), casClient.getName(), casClient.getUrlResolver(), callbackUrlResolver, casClient.getCallbackUrl()));
+
             sessionStore.set(webContext, CAS_CLIENT_ID_SESSION_KEY, ticket.getId());
         }
         if (client instanceof OAuth10Client) {
